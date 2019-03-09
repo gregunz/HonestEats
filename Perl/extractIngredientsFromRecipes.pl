@@ -6,12 +6,14 @@
 
 use Digest::MD5 qw(md5 md5_hex md5_base64);
 
+$recipe_html_path=$ARGV[0];
+
 $RECIPE_PAGES_PATH = "../data/recipePages";
 $RECIPE_LIST_FILE = "../data/msg_clean.txt";
 
 sub readFile {
 	my $filename = shift;
-	open(FILE, $filename) or return ""; 
+	open(FILE, $filename) or return "";
 	my $string = join("", <FILE>);
 	# remove the header line from the file content, such that files with only this line result in "":
 	$string =~ s/^<!--.*-->\n//;
@@ -93,7 +95,7 @@ foreach my $url (keys %md5) {
 	print STDERR "$count\n" if ($count % 1000 == 0);
 	next if (!defined($goodDomains{$domain}));
 	if ($domain eq "allrecipes.com") {
-		my $html = readFile("$RECIPE_PAGES_PATH/$md5{$url}.html");
+		my $html = readFile("$recipe_html_path");
 		my @matches = $html =~ m{<li class="plaincharacterwrap ingredient">\s*(.+?)</li>}sg;
 		my @ingredients = ();
 		foreach my $token (@matches) {
@@ -105,7 +107,7 @@ foreach my $url (keys %md5) {
 		}
 		printOutput($md5{$url}, $url, $title, \@ingredients);
 	} elsif ($domain eq "food.com") {
-		my $html = readFile("$RECIPE_PAGES_PATH/$md5{$url}.html");
+		my $html = readFile("$recipe_html_path");
 		my @matches = $html =~ m{<li class="ingredient" +itemprop="ingredients">\s*<span class="ingredient">(.+?)</span>\s*</li>}sg;
 		my @ingredients = ();
 		foreach my $token (@matches) {
@@ -117,7 +119,7 @@ foreach my $url (keys %md5) {
 		}
 		printOutput($md5{$url}, $url, $title, \@ingredients);
 	} elsif ($domain eq "yummly.com") {
-		my $html = readFile("$RECIPE_PAGES_PATH/$md5{$url}.html");
+		my $html = readFile("$recipe_html_path");
 		my @matches = $html =~ m{<div class="yRecipeIngredientLine">\s*<span itemprop="ingredients" class="ingredient">(.+?)\s*</div>}sg;
 		my @ingredients = ();
 		foreach my $token (@matches) {
@@ -129,7 +131,7 @@ foreach my $url (keys %md5) {
 		}
 		printOutput($md5{$url}, $url, $title, \@ingredients);
 	} elsif ($domain eq "myrecipes.com") {
-		my $html = readFile("$RECIPE_PAGES_PATH/$md5{$url}.html");
+		my $html = readFile("$recipe_html_path");
 		my @matches = $html =~ m{<li itemprop="ingredient" itemscope itemtype="http://data-vocabulary.org/RecipeIngredient">\s*(.+?)\s*</li>}sg;
 		my @ingredients = ();
 		foreach my $token (@matches) {
@@ -141,7 +143,7 @@ foreach my $url (keys %md5) {
 		}
 		printOutput($md5{$url}, $url, $title, \@ingredients);
 	} elsif ($domain eq "recipes.sparkpeople.com") {
-		my $html = readFile("$RECIPE_PAGES_PATH/$md5{$url}.html");
+		my $html = readFile("$recipe_html_path");
 		my @matches = $html =~ m{<span itemprop="name">(.*?)</span>}sg;
 		my @ingredients = ();
 		foreach my $token (@matches) {
@@ -153,7 +155,7 @@ foreach my $url (keys %md5) {
 		}
 		printOutput($md5{$url}, $url, $title, \@ingredients);
 	} elsif ($domain eq "bettycrocker.com") {
-		my $html = readFile("$RECIPE_PAGES_PATH/$md5{$url}.html");
+		my $html = readFile("$recipe_html_path");
 		my @matches = $html =~ m{<dl class="ingredient" itemprop="ingredients">(.+?)</dl>}sg;
 		my @ingredients = ();
 		foreach my $token (@matches) {
@@ -165,7 +167,7 @@ foreach my $url (keys %md5) {
 		}
 		printOutput($md5{$url}, $url, $title, \@ingredients);
 	} elsif ($domain eq "foodnetwork.com") {
-		my $html = readFile("$RECIPE_PAGES_PATH/$md5{$url}.html");
+		my $html = readFile("$recipe_html_path");
 		my @matches = $html =~ m{<li class="ingredient">(.+?)</li>}sg;
 		my @ingredients = ();
 		foreach my $token (@matches) {
@@ -177,7 +179,7 @@ foreach my $url (keys %md5) {
 		}
 		printOutput($md5{$url}, $url, $title, \@ingredients);
 	} elsif ($domain eq "cdkitchen.com") {
-		my $html = readFile("$RECIPE_PAGES_PATH/$md5{$url}.html");
+		my $html = readFile("$recipe_html_path");
 		my @matches = $html =~ m{<span class="abc">(.+?)</span>}sg;
 		my @ingredients = ();
 		foreach my $token (@matches) {
@@ -189,7 +191,7 @@ foreach my $url (keys %md5) {
 		}
 		printOutput($md5{$url}, $url, $title, \@ingredients);
 	} elsif ($domain eq "eatingwell.com") {
-		my $html = readFile("$RECIPE_PAGES_PATH/$md5{$url}.html");
+		my $html = readFile("$recipe_html_path");
 		my @matches = $html =~ m{<li itemprop="ingredients">(.*?)</li>}sg;
 		my @ingredients = ();
 		foreach my $token (@matches) {
@@ -201,7 +203,7 @@ foreach my $url (keys %md5) {
 		}
 		printOutput($md5{$url}, $url, $title, \@ingredients);
 	} elsif ($domain eq "delish.com") {
-		my $html = readFile("$RECIPE_PAGES_PATH/$md5{$url}.html");
+		my $html = readFile("$recipe_html_path");
 		my @matches = $html =~ m{<li class="ingredient">(.+?)</li>}sg;
 		my @ingredients = ();
 		foreach my $token (@matches) {
@@ -213,7 +215,7 @@ foreach my $url (keys %md5) {
 		}
 		printOutput($md5{$url}, $url, $title, \@ingredients);
 	} elsif ($domain eq "cookeatshare.com") {
-		my $html = readFile("$RECIPE_PAGES_PATH/$md5{$url}.html");
+		my $html = readFile("$recipe_html_path");
 		my @matches = $html =~ m{<span class="ingredient">(.+?)</span>}sg;
 		my @ingredients = ();
 		foreach my $token (@matches) {
@@ -225,7 +227,7 @@ foreach my $url (keys %md5) {
 		}
 		printOutput($md5{$url}, $url, $title, \@ingredients);
 	} elsif ($domain eq "recipe.com") {
-		my $html = readFile("$RECIPE_PAGES_PATH/$md5{$url}.html");
+		my $html = readFile("$recipe_html_path");
 		my @matches = $html =~ m{<div class="floatleft itemUnit W420">(.+?)</div>}sg;
 		my @ingredients = ();
 		foreach my $token (@matches) {
@@ -237,7 +239,7 @@ foreach my $url (keys %md5) {
 		}
 		printOutput($md5{$url}, $url, $title, \@ingredients);
 	} elsif ($domain eq "kraftrecipes.com") {
-		my $html = readFile("$RECIPE_PAGES_PATH/$md5{$url}.html");
+		my $html = readFile("$recipe_html_path");
 		my @matches = $html =~ m{<div class="desc">(.+?)</div>}sg;
 		my @ingredients = ();
 		foreach my $token (@matches) {
@@ -249,7 +251,7 @@ foreach my $url (keys %md5) {
 		}
 		printOutput($md5{$url}, $url, $title, \@ingredients);
 	} elsif ($domain eq "epicurious.com") {
-		my $html = readFile("$RECIPE_PAGES_PATH/$md5{$url}.html");
+		my $html = readFile("$recipe_html_path");
 		my @matches = $html =~ m{<li class="ingredient">(.+?)</li>}sg;
 		my @ingredients = ();
 		foreach my $token (@matches) {
