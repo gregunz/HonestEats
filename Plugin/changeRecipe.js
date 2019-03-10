@@ -19,11 +19,13 @@ window.onload = function() {
     lis_text.push(lis[i].textContent.replace(/\n/g, "").trim())
   }
 
+  var scores = []
   axios.post('http://127.0.0.1:5000/api', lis_text)
     .then(function (response) {
       Object.entries(response.data).forEach(([key, value]) => {
         index = key
         score = value["locality_score"][0]
+        scores.push(score)
         country = value["locality_score"][1]
         if(!country){
           country = "";
@@ -51,6 +53,11 @@ window.onload = function() {
       $(function(){
         $('.selectpicker').selectpicker();
       });
+
+      var lfis = document.getElementsByClassName('filter-option')
+      for (var i = 0; i < lfis.length; i++) {
+        lfis[i].classList.add(className(scores[i]))
+      }
     })
 
 }

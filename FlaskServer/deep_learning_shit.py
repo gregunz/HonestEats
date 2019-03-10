@@ -15,7 +15,7 @@ def lines_to_json(lines) :
     ings = to_model_ings(lines)
     
     for e, l in enumerate(lines) :
-        if "floury potatoes" in line :
+        if "floury potatoes" in l :
             ings[e] = "potato"
             
     json = dict()
