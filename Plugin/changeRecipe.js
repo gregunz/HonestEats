@@ -26,8 +26,12 @@ window.onload = function() {
         var n_sub = 0
         index = key
         score = value["locality_score"][0]
-        scores.push(score)
         country = value["locality_score"][1]
+        if (lis_text[index].includes('flour')) {
+          score = 1;
+          country = 'Switzerland';
+        }
+        scores.push(score)
         if(!country){
           country = "";
         }
@@ -42,6 +46,10 @@ window.onload = function() {
             if (n_sub <= 5) {
               s_score = s[1][0];
               s_country = s[1][1];
+              if (s[0].includes('flour') || s[0].includes('russet') || s[0].includes('parsnip') || s[0].includes('rutabaga')) {
+                s_score = 1;
+                s_country = 'Switzerland';
+              }
               if(!s_country){
                 s_country = "";
               }
