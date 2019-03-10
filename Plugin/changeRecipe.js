@@ -23,6 +23,7 @@ window.onload = function() {
   axios.post('http://127.0.0.1:5000/api', lis_text)
     .then(function (response) {
       Object.entries(response.data).forEach(([key, value]) => {
+        var n_sub = 0
         index = key
         score = value["locality_score"][0]
         scores.push(score)
@@ -37,18 +38,20 @@ window.onload = function() {
 
         if (substitutes != ""){
           substitutes.forEach(function(s) {
-            s_score = s[1][0];
-            s_country = s[1][1];
-            if(!s_country){
-              s_country = "";
+            n_sub += 1
+            if (n_sub <= 5) {
+              s_score = s[1][0];
+              s_country = s[1][1];
+              if(!s_country){
+                s_country = "";
+              }
+              dropdown_ing += '<option class="'+className(s_score)+'" data-subtext="'+s_country+'">'+s[0]+'</option>'
             }
-            dropdown_ing += '<option class="'+className(s_score)+'" data-subtext="'+s_country+'">'+s[0]+'</option>'
-          });
+            });
         }
 
         dropdown_ing += '</select>';
         lis[index].innerHTML = dropdown_ing
-
       });
       $(function(){
         $('.selectpicker').selectpicker();
