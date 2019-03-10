@@ -1,115 +1,56 @@
 window.onload = function() {
-	//document.write('Hello world')
-  // var x = document.getElementsByClassName("ingred-list ");
-  // var i;
-  // for (i = 0; i < x.length; i++) {
-  //   x[i].style.backgroundColor = "grey";
-  // }
 
-  var lis = document.getElementsByClassName("ingred-list ")[0].getElementsByTagName("li");
+  function className(score) {
+    c = 'grey'
+    if(score >= 1){
+      c = 'green'
+    } else if(score >= .75) {
+      c = 'yellow'
+    } else if(score >= .5){
+      c = 'red'
+    }
+    return c
+  }
 
-  // console.log(lis.length)
-  // console.log(lis)
+  var lis = document.getElementsByClassName("ingred-list")[0].getElementsByTagName("li");
 
   var lis_text = []
   for (var i = 0; i < lis.length; i++) {
-    lis_text.push(lis[i].textContent.replace(/\n/g, ""))
+    lis_text.push(lis[i].textContent.replace(/\n/g, "").trim())
   }
 
-  // for (var i=0; i<lis_text.length; i++) {
-  //   console.log(i + ". " + lis_text[i]);
-  // }
-  console.log(lis_text.length)
-
-  //to string
-
-  lis_string = JSON.stringify(lis_text);
-  // lis_string = ""
-  // for (var i=0; i<lis_text.length; i++) {
-  //   lis_string += lis_text + "|"
-  // }
-  // lis_string = lis_string.replace(/\n/g, "");
-  // console.log(lis_string)
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("POST", "http://127.0.0.1:5000/api", true);
-  xhttp.setRequestHeader("Content-type", "application/json");
-  xhttp.onreadystatechange = function() {
-    if (xhttp.readyState==4 && xhttp.status==200) {
-      response = xhttp.response
-      console.log(xhttp.response);
-      console.log(typeof response);
-      response_dict = JSON.parse(response)
-      console.log(typeof response_dict);
-      var i = 0
-      Object.entries(response_dict).forEach(([key, value]) => {
-        console.log(key, value);
-        locality_Score = value["locality_score"]
+  axios.post('http://127.0.0.1:5000/api', lis_text)
+    .then(function (response) {
+      Object.entries(response.data).forEach(([key, value]) => {
+        index = key
+        score = value["locality_score"][0]
+        country = value["locality_score"][1]
+        if(!country){
+          country = "";
+        }
         substitutes = value["substitutes"]
-        if (locality_Score[i] < 0.3) {
-          lis[i].style.backgroundColor = "red";
-        }
-        else if (locality_Score[i] < 0.7) {
-          lis[i].style.backgroundColor = "orange";
-        }
-        else {
-          lis[i].style.backgroundColor = "green";
-        }
-
-        lis[i].innerHTML += "</br> Locality Score: " + locality_Score;
+    
+        dropdown_ing = '<select class="selectpicker">';
+        dropdown_ing += '<option class="'+className(score)+'" data-subtext="'+country+'">'+lis_text[index]+'</option>'
 
         if (substitutes != ""){
-          lis[i].innerHTML += "</br> Suggestion: " + substitutes;
+          substitutes.forEach(function(s) {
+            s_score = s[1][0];
+            s_country = s[1][1];
+            if(!s_country){
+              s_country = "";
+            }
+            dropdown_ing += '<option class="'+className(s_score)+'" data-subtext="'+s_country+'">'+s[0]+'</option>'
+          });
         }
 
-        i = i + 1
+        dropdown_ing += '</select>';
+        lis[index].innerHTML = dropdown_ing
+
       });
-
-    }
-  }
-  xhttp.send(lis_string);
-
-  console.log(response);
-  // //mock locality score
-  // var locality_Score = []
-  // var counter = 0
-  // for (var i=0; i<17; i++) {
-  //   locality_Score.push(counter)
-  //   counter += 0.1
-  //   if (counter >= 1) {
-  //     counter = 0
-  //   }
-  // }
-  // //mock old list
-  // var old_ingredients = ["shallots", "garlic", "ginger", "chicken", "groundnut oil", "sesame oil", "anise", "coriander", "mint", "tofu", "spring onions", "fresh red chilli",
-  //                         "baby spinach", "rice noodles", "soy sauce", "seaweed nori sheets", "lime"]
-  //
-  // //mock new list
-  // var new_ingredients = ["shallots", "garlic", "ginger", "duck", "olive oil", "sesame oil", "anis", "parsley", "fresh mint", "beans", "spring onions", "pepper",
-  //                         "baby spinach", "spaghettit", "soy sauce", "seaweed nori sheets", "lemon"]
-
-
-  // for (var i=0; i<locality_Score.length; i++) {
-  //   console.log(i + ". " + locality_Score[i]);
-  // }
-
-  // // dict_keys = response.keys()
-
-  // for (i = 0; i < lis.length; i++) {
-  //   var tdElement = lis[i];
-  //   if (old_ingredients[i] === new_ingredients[i]) {
-  //     tdElement.innerHTML = "Original ingredient: " + old_ingredients[i] + "</br> Locality Score: " + locality_Score[i].toFixed(2)
-  //   }
-  //   else {
-  //     tdElement.innerHTML = "Original ingredient: " + old_ingredients[i] + "</br> Locality Score: " + locality_Score[i].toFixed(2) +"</br> Suggestion: " + new_ingredients[i];
-  //   }
-  // }
-
-//   for (const [key, value ] of Object.entries(response)) {
-//     // do something with `key` and `value`
-// }
-
-
-
-
+      $(function(){
+        $('.selectpicker').selectpicker();
+      });
+    })
 
 }

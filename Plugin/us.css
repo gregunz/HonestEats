@@ -1,0 +1,42 @@
+#recipe-single .ingredient-wrapper a {
+    font-weight: bold !important;
+    color: black !important;
+}
+
+.dropdown-menu {
+    margin: 0 !important;
+    padding: 0 !important
+}
+
+.btn {
+    margin-top: 4px !important;
+}
+
+#recipe-single .recipe-ingredients .ingred-list li {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.bootstrap-select .dropdown-menu li.active small {
+    color: rgb(119, 119, 119);
+}
+
+.green {
+    background-color: #c7ea46 !important;
+}
+
+.yellow {
+    background-color: #F9812A !important;
+}
+
+.orange {
+    background-color: #F9812A !important;
+}
+
+.red {
+    background-color: #CD5C5C !important;
+}
+
+.grey {
+    background-color: #D3D3D3;
+}
