@@ -13,6 +13,11 @@ ing_to_country2 = pickle.load(open('../resources/ing_to_country2.p', 'rb'))
 
 def lines_to_json(lines) :
     ings = to_model_ings(lines)
+    
+    for e, l in enumerate(lines) :
+        if "floury potatoes" in line :
+            ings[e] = "potato"
+            
     json = dict()
     for i, ing in enumerate(ings):
         print("{} -> {} -> {}".format(lines[i], ing, replacements[ing]))
