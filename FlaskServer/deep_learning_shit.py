@@ -14,7 +14,8 @@ ing_to_country2 = pickle.load(open('../resources/ing_to_country2.p', 'rb'))
 def lines_to_json(lines) :
     ings = to_model_ings(lines)
     json = dict()
-    for i, ing in enumerate(ings) :
+    for i, ing in enumerate(ings):
+        print("{} -> {} -> {}".format(lines[i], ing, replacements[ing]))
         loc_score = locality_score(ing)
         json[i] = {"locality_score":loc_score, "substitutes": [(c[0], locality_score(c[0])) for c in replacements[ing]]}
     return json
