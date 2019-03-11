@@ -1,14 +1,13 @@
 # Honest Eats
 
-Let present you our work done during the 35 hours long [START HACK](http://www.starthack.ch).
+Let present you our work done during the 35 hours long [START Hack](http://www.starthack.ch) in St-Gallen.
 
-Demo:
+## Demo
 <div style="text-align:center">
-  <img src="https://media.giphy.com/media/ksEIgXOF7X6ceQESXY/source.gif" />
+  <img src="https://media.giphy.com/media/paI3CPdxnq0eI5lmiW/source.gif" />
 </div>
 
-
-Slides:
+## Slides
 <div style="text-align:center">
   <img src="https://media.giphy.com/media/1woWwJiCNvBADQOPOd/source.gif" />
 </div>
@@ -17,4 +16,4 @@ Slides:
 <br/>
 <br/>
 <br/>
-It's not the end. More to come!
+#### It's not the end. More to come!
