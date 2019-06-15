@@ -1,3 +1,4 @@
+*.mov
 .DS_Store
 *.json
 !Plugin/manifest.json
