@@ -1,3 +1,6 @@
+> This project was rewarded by a __Honorary Award__ from __Microsoft__ at START Hack 2019 in St-Gallen.
+
+
 # Honest Eats
 
 Let present you our work done during the 35 hours long [START Hack](http://www.starthack.ch) in St-Gallen.
@@ -24,9 +27,3 @@ Extending it to by coupling more informations about the ingredients and refining
   <img src="https://media.giphy.com/media/1woWwJiCNvBADQOPOd/source.gif" />
 </div>
 
-
-<br/>
-<br/>
-<br/>
-
-#### It is not the end... More to come!
